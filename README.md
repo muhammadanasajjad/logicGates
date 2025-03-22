@@ -48,4 +48,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For questions or feature requests, contact: [Your Email or GitHub Profile]
+For questions or feature requests create an issue
