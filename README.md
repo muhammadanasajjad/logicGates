@@ -18,8 +18,8 @@ The Digital Logic Simulator is an interactive tool that allows users to design, 
 Clone the repository:
 
 ```sh
- git clone https://github.com/muhammadanasajjad/digital-logic-simulator.git
- cd digital-logic-simulator
+ git clone https://github.com/muhammadanasajjad/logicGates.git
+ cd logicGates
 ```
 
 ## Usage
