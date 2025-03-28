@@ -7,22 +7,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
         <script type="module">
             // Import the functions you need from the SDKs you need
+            import { firebaseConfig } from "./env.js";
             import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
 
             // Your web app's Firebase configuration
-            const firebaseConfig = {
-                apiKey: "AIzaSyBmjH2JB3DnVoq9fbiz5w-_-hfiv588h-s",
-                authDomain: "digital-logic-simulator.firebaseapp.com",
-                projectId: "digital-logic-simulator",
-                storageBucket: "digital-logic-simulator.firebasestorage.app",
-                messagingSenderId: "968889483211",
-                appId: "1:968889483211:web:ea1be0af888d4f74ab804e",
-            };
+            const fbConfig = firebaseConfig;
 
             // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
+            const app = initializeApp(fbConfig);
         </script>
         <link rel="stylesheet" type="text/css" href="style.css" />
         <meta charset="utf-8" />

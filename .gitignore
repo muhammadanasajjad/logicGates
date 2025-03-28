@@ -72,3 +72,4 @@ node_modules/
 
 #vs code
 .vscode/
+env.js
