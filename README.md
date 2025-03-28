@@ -2,16 +2,18 @@
 
 ## Overview
 
-The Digital Logic Simulator is an interactive tool that allows users to design, simulate, and analyze digital circuits. Users can create circuits using basic logic gates such as AND, OR, NOT, XOR, NAND, NOR, and XNOR, as well as more complex components like flip-flops and custom reusable chips.
+The Digital Logic Simulator is an interactive tool that allows users to design, simulate, and analyze digital circuits. Users can create circuits using basic logic gates such as AND, OR, NOT, XOR, NAND, NOR, and XNOR, as well as more complex components like flip-flops and custom reusable chips. **Give it a [try](https://digital-logic-simulator.web.app/)!**
 
 ## Features
 
 -   **Drag-and-drop interface** for placing and connecting logic gates
 -   **Live simulation** of circuit behavior
 -   **Custom component creation** to save and reuse circuit designs
--   **Truth table generation** for circuit analysis
+
+## Upcoming Features
+
+-   **Truth table generation** for circuit analysis (COMING SOON)
 -   **Export and import functionality** to save and share circuit designs
--   **Support for combinational and sequential logic**
 
 ## Installation
 
