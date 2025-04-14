@@ -32,30 +32,50 @@
                 </button>
             </div>
             <input id="gate-custom-name-field" type="text" />
+            <button id="gate-delete-button">Delete</button>
         </div>
 
         <div id="menu">
             <button id="view-menu-button">View</button>
             <button id="delete-menu-button">Delete</button>
         </div>
+
+        <div id="inout-menu">
+            <button id="INPUT-creation-button">IN</button>
+            <button id="INPUT2-creation-button">IN2</button>
+            <button id="INPUT4-creation-button">IN4</button>
+            <button id="INPUT6-creation-button">IN6</button>
+            <button id="INPUT8-creation-button">IN8</button>
+            <br />
+            <button id="OUTPUT-creation-button">OUT</button>
+            <button id="OUTPUT2-creation-button">OUT2</button>
+            <button id="OUTPUT4-creation-button">OUT4</button>
+            <button id="OUTPUT6-creation-button">OUT6</button>
+            <button id="OUTPUT8-creation-button">OUT8</button>
+        </div>
         <div class="all-menu-large-container">
             <div class="top-bar">
                 <p>Current Chip Name</p>
                 <input id="current-chip-name-field" type="text" />
             </div>
-            <main></main>
+            <main>
+                <div class="main-container">
+                    <div class="canvas-container" id="canvas-container">
+                        <canvas id="p5-canvas"></canvas>
+                    </div>
+                    <!-- <div class="logic-summary" id="logic-summary"></div> -->
+                </div>
+            </main>
             <div class="button-container">
                 <div class="gates-container" id="gates-container">
                     <button id="AND-creation-button">AND</button>
                     <button id="OR-creation-button">OR</button>
                     <button id="NOT-creation-button">NOT</button>
-                    <button id="INPUT-creation-button">INPUT</button>
-                    <button id="OUTPUT-creation-button">OUTPUT</button>
+                    <button id="INOUT-creation-button" onclick="toggleInOut()">
+                        IN/OUT >
+                    </button>
                     <button id="SEGMENTED-DISPLAY-creation-button">
                         7 Segment
-                    </button>
-                    <button id="SEGMENTED-HANDLER-creation-button">
-                        Handler
                     </button>
                 </div>
                 <div class="menu-container">
@@ -63,10 +83,13 @@
                 </div>
             </div>
         </div>
+
+        <script src="utils.js"></script>
         <script src="gate.js"></script>
         <script src="chip.js"></script>
         <script src="segmentedDisplay.js"></script>
         <script src="wire.js"></script>
         <script src="sketch.js"></script>
+        <script src="mouseEvents.js"></script>
     </body>
 </html>
