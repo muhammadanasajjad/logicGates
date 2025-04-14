@@ -14,10 +14,10 @@ class Chip {
         this.outputIndices = [];
         for (let i = 0; i < subGates.length; i++) {
             let gate = subGates[i];
-            if (gate.type == "INPUT") {
+            if (gate.type && gate.type.startsWith("INPUT")) {
                 this.inputCount++;
                 this.inputIndices.push(i);
-            } else if (gate.type == "OUTPUT") {
+            } else if (gate.type && gate.type.startsWith("OUTPUT")) {
                 this.outputCount++;
                 this.outputIndices.push(i);
             }
@@ -32,8 +32,19 @@ class Chip {
             this.subWires[i].travelSpeed = 1.0;
         }
 
-        this.currentInputs = Array(this.inputCount).fill(false);
-        this.currentOutputs = Array(this.outputCount).fill(false);
+        this.currentInputs = Array(this.inputCount);
+        for (let i = 0; i < this.inputCount; i++) {
+            let inputGate = this.subGates[this.inputIndices[i]];
+            this.currentInputs[i] = Array(
+                inputGate.currentInputs[0].length
+            ).fill(false);
+        }
+
+        this.currentOutputs = Array(this.outputCount);
+        for (let i = 0; i < this.outputCount; i++) {
+            let outputGate = this.subGates[this.outputIndices[i]];
+            this.currentOutputs[i] = outputGate.currentInputs[0];
+        }
         this.compute();
 
         this.connectorDiameter = 15;
@@ -44,7 +55,6 @@ class Chip {
             this.connectorSpacing +
             (this.connectorSpacing + this.connectorDiameter) *
                 max(this.inputCount, this.outputCount);
-        x;
     }
 
     reorderNodes(nodes, wires) {
@@ -157,7 +167,9 @@ class Chip {
                     updatedWires[i].from,
                     updatedWires[i].fromI,
                     updatedWires[i].to,
-                    updatedWires[i].toI
+                    updatedWires[i].toI,
+                    updatedWires[i].midPonts,
+                    updatedWires[i].stateCount
                 )
             );
         }
@@ -168,8 +180,7 @@ class Chip {
             // Assign inputs to first sub-gates
             for (let i = 0; i < this.inputCount; i++) {
                 let index = this.inputIndices[i];
-                this.subGates[index].currentInputs[0] =
-                    this.currentInputs[index];
+                this.subGates[index].currentInputs = [this.currentInputs[i]];
             }
 
             // Update wires inside the chip
@@ -235,13 +246,21 @@ class Chip {
         text(this.name, this.x, this.y);
 
         for (let i = 0; i < this.inputCount; i++) {
-            fill(this.currentInputs[i] ? onColour : offColour);
+            fill(this.currentInputs[i][0] ? onColour : offColour);
             let pos = this.inputPos(i);
-            ellipse(pos.x, pos.y, this.connectorDiameter);
+            ellipse(
+                pos.x,
+                pos.y,
+                max(this.connectorDiameter, 4.5 * this.currentInputs[i].length)
+            );
 
             if (
-                dist(pos.x, pos.y, mouseX, mouseY) <
-                    this.connectorDiameter / 2 &&
+                dist(pos.x, pos.y, worldMouseX, worldMouseY) <
+                    max(
+                        this.connectorDiameter,
+                        4.5 * this.currentInputs[i].length
+                    ) /
+                        2 &&
                 this.subGates[this.inputIndices[i]].customName != ""
             ) {
                 push();
@@ -250,8 +269,8 @@ class Chip {
                 fill(55, 235);
                 rectMode(CENTER);
                 rect(
-                    mouseX,
-                    mouseY,
+                    worldMouseX,
+                    worldMouseY,
                     textWidth(this.subGates[this.inputIndices[i]].customName) +
                         20,
                     20
@@ -262,21 +281,29 @@ class Chip {
                 textAlign(CENTER, CENTER);
                 text(
                     this.subGates[this.inputIndices[i]].customName,
-                    mouseX,
-                    mouseY
+                    worldMouseX,
+                    worldMouseY
                 );
                 pop();
             }
         }
 
         for (let i = 0; i < this.outputCount; i++) {
-            fill(this.currentOutputs[i] ? onColour : offColour);
+            fill(this.currentOutputs[i][0] ? onColour : offColour);
             let pos = this.outputPos(i);
-            ellipse(pos.x, pos.y, this.connectorDiameter);
+            ellipse(
+                pos.x,
+                pos.y,
+                max(this.connectorDiameter, 4.5 * this.currentOutputs[i].length)
+            );
 
             if (
-                dist(pos.x, pos.y, mouseX, mouseY) <
-                    this.connectorDiameter / 2 &&
+                dist(pos.x, pos.y, worldMouseX, worldMouseY) <
+                    max(
+                        this.connectorDiameter,
+                        4.5 * this.currentOutputs[i].length
+                    ) /
+                        2 &&
                 this.subGates[this.outputIndices[i]].customName != ""
             ) {
                 push();
@@ -285,8 +312,8 @@ class Chip {
                 fill(55, 235);
                 rectMode(CENTER);
                 rect(
-                    mouseX,
-                    mouseY,
+                    worldMouseX,
+                    worldMouseY,
                     textWidth(this.subGates[this.outputIndices[i]].customName) +
                         20,
                     20
@@ -297,29 +324,33 @@ class Chip {
                 textAlign(CENTER, CENTER);
                 text(
                     this.subGates[this.outputIndices[i]].customName,
-                    mouseX,
-                    mouseY
+                    worldMouseX,
+                    worldMouseY
                 );
                 pop();
             }
         }
         pop();
 
+        this.showLabel();
+    }
+
+    showLabel() {
         if (
             this.customName != "" &&
-            mouseX > this.x - this.width / 2 + 7.5 &&
-            mouseX < this.x + this.width / 2 - 7.5 &&
-            mouseY > this.y - this.height / 2 &&
-            mouseY < this.y + this.height / 2
+            worldMouseX > this.x - this.width / 2 + 7.5 &&
+            worldMouseX < this.x + this.width / 2 - 7.5 &&
+            worldMouseY > this.y - this.height / 2 &&
+            worldMouseY < this.y + this.height / 2
         ) {
             push();
             fill(55, 235);
             rectMode(CENTER);
-            rect(mouseX, mouseY, textWidth(this.customName) + 20, 20);
+            rect(worldMouseX, worldMouseY, textWidth(this.customName) + 20, 20);
 
             fill(255);
             textAlign(CENTER, CENTER);
-            text(this.customName, mouseX, mouseY);
+            text(this.customName, worldMouseX, worldMouseY);
             pop();
         }
     }
@@ -340,6 +371,16 @@ function getChipCopy(chip, x, y, name, customName) {
         );
     if (name == "SEGMENTED-DISPLAY") {
         return new SegmentedDisplay(x, y);
+    } else if (
+        name.startsWith("CONVERTER") ||
+        chip.name.startsWith("CONVERTER")
+    ) {
+        return new ConverterChip(
+            x ? x : chip.x,
+            y ? y : chip.y,
+            chip.fromConverter,
+            chip.to
+        );
     }
     let tempGates = [];
     for (let i = 0; i < chip.subGates.length; i++) {
@@ -365,7 +406,9 @@ function getChipCopy(chip, x, y, name, customName) {
                 currentWire.from,
                 currentWire.fromI,
                 currentWire.to,
-                currentWire.toI
+                currentWire.toI,
+                vectorsFromList(vectorsToList(currentWire.midPoints)),
+                currentWire.stateCount
             )
         );
     }
