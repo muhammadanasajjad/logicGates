@@ -135,21 +135,6 @@ element.addEventListener("mouseup", (e) => {
                         clickedInputsOutputs = true;
                     }
                 }
-                for (let j = 0; j < gate.inputCount; j++) {
-                    if (
-                        dist(
-                            worldMouseX,
-                            worldMouseY,
-                            gate.inputPos(j).x,
-                            gate.inputPos(j).y
-                        ) <
-                        gate.connectorDiameter / 2
-                    ) {
-                        if (gate.currentInputs[j].length === 1)
-                            gate.currentInputs[j][0] =
-                                !gate.currentInputs[j][0];
-                    }
-                }
                 if (gate.type && gate.type.startsWith("INPUT")) {
                     for (let j = 0; j < gate.currentInputs[0].length; j++) {
                         if (
@@ -164,6 +149,22 @@ element.addEventListener("mouseup", (e) => {
                             gate.currentInputs[0][j] =
                                 !gate.currentInputs[0][j];
                             break;
+                        }
+                    }
+                } else {
+                    for (let j = 0; j < gate.inputCount; j++) {
+                        if (
+                            dist(
+                                worldMouseX,
+                                worldMouseY,
+                                gate.inputPos(j).x,
+                                gate.inputPos(j).y
+                            ) <
+                            gate.connectorDiameter / 2
+                        ) {
+                            if (gate.currentInputs[j].length === 1)
+                                gate.currentInputs[j][0] =
+                                    !gate.currentInputs[j][0];
                         }
                     }
                 }

@@ -3,6 +3,7 @@ const handlers = {
     OR: (inputs) => [[inputs[0][0] || inputs[1][0]]],
     NOT: (inputs) => [[!inputs[0][0]]],
     INPUT: (inputs) => [[inputs[0][0]]],
+    INPUT1: (inputs) => [[inputs[0][0]]],
     INPUT2: (inputs) => [[inputs[0][0], inputs[0][1]]],
     INPUT4: (inputs) => [
         [inputs[0][0], inputs[0][1], inputs[0][2], inputs[0][3]],
@@ -30,6 +31,7 @@ const handlers = {
         ],
     ],
     OUTPUT: (inputs) => [[inputs[0][0]]],
+    OUTPUT1: (inputs) => [[inputs[0][0]]],
     OUTPUT2: (inputs) => [[inputs[0][0], inputs[0][1]]],
     OUTPUT4: (inputs) => [
         [inputs[0][0], inputs[0][1], inputs[0][2], inputs[0][3]],
@@ -63,11 +65,13 @@ const inputCounts = {
     OR: [1, 1],
     NOT: [1],
     INPUT: [1],
+    INPUT1: [1],
     INPUT2: [2],
     INPUT4: [4],
     INPUT6: [6],
     INPUT8: [8],
     OUTPUT: [1],
+    OUTPUT1: [1],
     OUTPUT2: [2],
     OUTPUT4: [4],
     OUTPUT6: [6],
@@ -80,11 +84,13 @@ const outputCounts = {
     OR: [1],
     NOT: [1],
     INPUT: [1],
+    INPUT1: [1],
     INPUT2: [2],
     INPUT4: [4],
     INPUT6: [6],
     INPUT8: [8],
     OUTPUT: [1],
+    OUTPUT1: [1],
     OUTPUT2: [2],
     OUTPUT4: [4],
     OUTPUT6: [6],
@@ -163,7 +169,8 @@ class Gate {
             return createVector(
                 this.x +
                     this.width / 2 -
-                    (perRow - (i % perRow)) * this.connectorDiameter,
+                    (perRow - (i % perRow)) * this.connectorDiameter +
+                    this.connectorSpacing / 2,
                 this.y +
                     this.connectorDiameter * floor(i / perRow) -
                     ((rows - 1) * this.connectorDiameter) / 2
@@ -191,7 +198,10 @@ class Gate {
             this.connectorDiameter / 2 -
             this.connectorSpacing / 2;
         let w =
-            min(4, this.currentInputs[0].length / 2) * this.connectorDiameter +
+            (this.currentInputs[0].length > 2
+                ? min(4, this.currentInputs[0].length / 2)
+                : this.currentInputs[0].length) *
+                this.connectorDiameter +
             this.connectorSpacing;
         let h = rows * this.connectorDiameter + this.connectorSpacing;
         this.height = h;
@@ -264,7 +274,10 @@ class Gate {
             this.connectorDiameter / 2 -
             this.connectorSpacing / 2;
         let w =
-            min(4, this.currentOutputs[0].length / 2) * this.connectorDiameter +
+            (this.currentOutputs[0].length > 2
+                ? min(4, this.currentOutputs[0].length / 2)
+                : this.currentOutputs[0].length) *
+                this.connectorDiameter +
             this.connectorSpacing;
         let h = rows * this.connectorDiameter + this.connectorSpacing;
         this.height = h;

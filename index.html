@@ -46,12 +46,36 @@
             <button id="INPUT4-creation-button">IN4</button>
             <button id="INPUT6-creation-button">IN6</button>
             <button id="INPUT8-creation-button">IN8</button>
+
             <br />
+
             <button id="OUTPUT-creation-button">OUT</button>
             <button id="OUTPUT2-creation-button">OUT2</button>
             <button id="OUTPUT4-creation-button">OUT4</button>
             <button id="OUTPUT6-creation-button">OUT6</button>
             <button id="OUTPUT8-creation-button">OUT8</button>
+        </div>
+
+        <div id="converter-menu">
+            <button id="CONVERTER-8-4-creation-button">8→4</button>
+            <button id="CONVERTER-8-2-creation-button">8→2</button>
+            <button id="CONVERTER-8-1-creation-button">8→1</button>
+            <button id="CONVERTER-6-2-creation-button">6→2</button>
+            <button id="CONVERTER-6-1-creation-button">6→1</button>
+            <button id="CONVERTER-4-2-creation-button">4→2</button>
+            <button id="CONVERTER-4-1-creation-button">4→1</button>
+            <button id="CONVERTER-2-1-creation-button">2→1</button>
+
+            <br />
+
+            <button id="CONVERTER-4-8-creation-button">4→8</button>
+            <button id="CONVERTER-2-8-creation-button">2→8</button>
+            <button id="CONVERTER-1-8-creation-button">1→8</button>
+            <button id="CONVERTER-2-6-creation-button">2→6</button>
+            <button id="CONVERTER-1-6-creation-button">1→6</button>
+            <button id="CONVERTER-2-4-creation-button">2→4</button>
+            <button id="CONVERTER-1-4-creation-button">1→4</button>
+            <button id="CONVERTER-1-2-creation-button">1→2</button>
         </div>
         <div class="all-menu-large-container">
             <div class="top-bar">
@@ -68,12 +92,18 @@
             </main>
             <div class="button-container">
                 <div class="gates-container" id="gates-container">
-                    <button id="AND-creation-button">AND</button>
-                    <button id="OR-creation-button">OR</button>
-                    <button id="NOT-creation-button">NOT</button>
                     <button id="INOUT-creation-button" onclick="toggleInOut()">
                         IN/OUT >
                     </button>
+                    <button
+                        id="CONVERTER-creation-button"
+                        onclick="toggleConverter()"
+                    >
+                        CONVERTER >
+                    </button>
+                    <button id="AND-creation-button">AND</button>
+                    <button id="OR-creation-button">OR</button>
+                    <button id="NOT-creation-button">NOT</button>
                     <button id="SEGMENTED-DISPLAY-creation-button">
                         7 Segment
                     </button>
@@ -87,6 +117,7 @@
         <script src="utils.js"></script>
         <script src="gate.js"></script>
         <script src="chip.js"></script>
+        <script src="converterChip.js"></script>
         <script src="segmentedDisplay.js"></script>
         <script src="wire.js"></script>
         <script src="sketch.js"></script>

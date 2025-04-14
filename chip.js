@@ -14,10 +14,10 @@ class Chip {
         this.outputIndices = [];
         for (let i = 0; i < subGates.length; i++) {
             let gate = subGates[i];
-            if (gate.type.startsWith("INPUT")) {
+            if (gate.type && gate.type.startsWith("INPUT")) {
                 this.inputCount++;
                 this.inputIndices.push(i);
-            } else if (gate.type.startsWith("OUTPUT")) {
+            } else if (gate.type && gate.type.startsWith("OUTPUT")) {
                 this.outputCount++;
                 this.outputIndices.push(i);
             }
@@ -371,6 +371,16 @@ function getChipCopy(chip, x, y, name, customName) {
         );
     if (name == "SEGMENTED-DISPLAY") {
         return new SegmentedDisplay(x, y);
+    } else if (
+        name.startsWith("CONVERTER") ||
+        chip.name.startsWith("CONVERTER")
+    ) {
+        return new ConverterChip(
+            x ? x : chip.x,
+            y ? y : chip.y,
+            chip.fromConverter,
+            chip.to
+        );
     }
     let tempGates = [];
     for (let i = 0; i < chip.subGates.length; i++) {

@@ -50,6 +50,24 @@ function setup() {
     document.getElementById("gate-edit-menu").oncontextmenu = () => false;
 
     chips["SEGMENTED-DISPLAY"] = new SegmentedDisplay(100, 100);
+    chips["CONVERTER 8-4"] = new ConverterChip(100, 100, 8, 4);
+    chips["CONVERTER 8-2"] = new ConverterChip(100, 100, 8, 2);
+    chips["CONVERTER 8-1"] = new ConverterChip(100, 100, 8, 1);
+    chips["CONVERTER 6-2"] = new ConverterChip(100, 100, 6, 2);
+    chips["CONVERTER 6-1"] = new ConverterChip(100, 100, 6, 1);
+    chips["CONVERTER 4-2"] = new ConverterChip(100, 100, 4, 2);
+    chips["CONVERTER 4-1"] = new ConverterChip(100, 100, 4, 1);
+    chips["CONVERTER 2-1"] = new ConverterChip(100, 100, 2, 1);
+
+    chips["CONVERTER 4-8"] = new ConverterChip(100, 100, 4, 8);
+    chips["CONVERTER 2-8"] = new ConverterChip(100, 100, 2, 8);
+    chips["CONVERTER 1-8"] = new ConverterChip(100, 100, 1, 8);
+    chips["CONVERTER 2-6"] = new ConverterChip(100, 100, 2, 6);
+    chips["CONVERTER 1-6"] = new ConverterChip(100, 100, 1, 6);
+    chips["CONVERTER 2-4"] = new ConverterChip(100, 100, 2, 4);
+    chips["CONVERTER 1-4"] = new ConverterChip(100, 100, 1, 4);
+    chips["CONVERTER 1-2"] = new ConverterChip(100, 100, 1, 2);
+
     console.log(chips);
 
     onColour = color(233, 50, 69);
@@ -58,6 +76,20 @@ function setup() {
     loadSavedChips();
 
     createButtons();
+
+    gates.push(new Gate(width / 2 - 200, height / 2, "INPUT4"));
+    gates.push(new ConverterChip(width / 2, height / 2, 4, 1));
+    gates.push(new ConverterChip(width / 2 + 200, height / 2, 1, 4));
+    gates.push(new SegmentedDisplay(width / 2 + 400, height / 2));
+
+    wires.push(new Wire(0, 0, 1, 0, [], 4));
+
+    wires.push(new Wire(1, 0, 2, 0, [], 1));
+    wires.push(new Wire(1, 1, 2, 1, [], 1));
+    wires.push(new Wire(1, 2, 2, 2, [], 1));
+    wires.push(new Wire(1, 3, 2, 3, [], 1));
+
+    wires.push(new Wire(2, 0, 3, 0, [], 4));
 
     // gates.push(new Gate(width / 2 - 100, height / 2, "INPUT"));
     // gates.push(new Gate(width / 2 + 100, height / 2 + 100, "OUTPUT"));
@@ -174,6 +206,16 @@ function getChipCopy(chip, x, y, name, customName) {
         );
     if (name == "SEGMENTED-DISPLAY" || chip.name == "SEGMENTED-DISPLAY") {
         return new SegmentedDisplay(x ? x : chip.x, y ? y : chip.y);
+    } else if (
+        (name && name.startsWith("CONVERTER")) ||
+        chip.name.startsWith("CONVERTER")
+    ) {
+        return new ConverterChip(
+            x ? x : chip.x,
+            y ? y : chip.y,
+            chip.fromConverter,
+            chip.toConverter
+        );
     }
     let tempGates = [];
     for (let i = 0; i < chip.subGates.length; i++) {

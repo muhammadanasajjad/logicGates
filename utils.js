@@ -25,6 +25,13 @@ function loadSavedChips() {
             );
             if (name == "SEGMENTED-DISPLAY") {
                 chip = new SegmentedDisplay(mouseX, y);
+            } else if (name && name.startsWith("CONVERTER")) {
+                chip = new ConverterChip(
+                    mouseX,
+                    mouseY,
+                    name.split("-")[1],
+                    name.split("-")[2]
+                );
             }
             button.onclick = () => selectedGateType.push(getChipCopy(chip));
         }
@@ -241,6 +248,102 @@ function createButtons() {
     SegmentedDisplayButton.onclick = () =>
         selectedGateType.push(new SegmentedDisplay(mouseX, mouseY));
 
+    let CONVERTERCHIP84Button = document.getElementById(
+        "CONVERTER-8-4-creation-button"
+    );
+    CONVERTERCHIP84Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 8, 4));
+
+    let CONVERTERCHIP82Button = document.getElementById(
+        "CONVERTER-8-2-creation-button"
+    );
+    CONVERTERCHIP82Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 8, 2));
+
+    let CONVERTERCHIP81Button = document.getElementById(
+        "CONVERTER-8-1-creation-button"
+    );
+    CONVERTERCHIP81Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 8, 1));
+
+    let CONVERTERCHIP62Button = document.getElementById(
+        "CONVERTER-6-2-creation-button"
+    );
+    CONVERTERCHIP62Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 2));
+
+    let CONVERTERCHIP61Button = document.getElementById(
+        "CONVERTER-6-1-creation-button"
+    );
+    CONVERTERCHIP61Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 1));
+
+    let CONVERTERCHIP42Button = document.getElementById(
+        "CONVERTER-4-2-creation-button"
+    );
+    CONVERTERCHIP42Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 4, 2));
+
+    let CONVERTERCHIP41Button = document.getElementById(
+        "CONVERTER-4-1-creation-button"
+    );
+    CONVERTERCHIP41Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 4, 1));
+
+    let CONVERTERCHIP21Button = document.getElementById(
+        "CONVERTER-2-1-creation-button"
+    );
+    CONVERTERCHIP21Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 1));
+
+    let CONVERTERCHIP48Button = document.getElementById(
+        "CONVERTER-4-8-creation-button"
+    );
+    CONVERTERCHIP48Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 4, 8));
+
+    let CONVERTERCHIP28Button = document.getElementById(
+        "CONVERTER-2-8-creation-button"
+    );
+    CONVERTERCHIP28Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 8));
+
+    let CONVERTERCHIP18Button = document.getElementById(
+        "CONVERTER-1-8-creation-button"
+    );
+    CONVERTERCHIP18Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 8));
+
+    let CONVERTERCHIP26Button = document.getElementById(
+        "CONVERTER-2-6-creation-button"
+    );
+    CONVERTERCHIP26Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 6));
+
+    let CONVERTERCHIP16Button = document.getElementById(
+        "CONVERTER-1-6-creation-button"
+    );
+    CONVERTERCHIP16Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 6));
+
+    let CONVERTERCHIP24Button = document.getElementById(
+        "CONVERTER-2-4-creation-button"
+    );
+    CONVERTERCHIP24Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 4));
+
+    let CONVERTERCHIP14Button = document.getElementById(
+        "CONVERTER-1-4-creation-button"
+    );
+    CONVERTERCHIP14Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 4));
+
+    let CONVERTERCHIP12Button = document.getElementById(
+        "CONVERTER-1-2-creation-button"
+    );
+    CONVERTERCHIP12Button.onclick = () =>
+        selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 2));
+
     let buttonSave = document.getElementById("save-menu-button");
 
     buttonSave.onclick = () => {
@@ -396,6 +499,20 @@ function toggleInOut() {
     document.getElementById("inout-menu").style.bottom =
         windowHeight -
         document.getElementById("INOUT-creation-button").offsetTop +
+        "px";
+}
+
+function toggleConverter() {
+    document.getElementById("converter-menu").style.display =
+        document.getElementById("converter-menu").style.display == "none"
+            ? "block"
+            : "none";
+
+    document.getElementById("converter-menu").style.left =
+        document.getElementById("CONVERTER-creation-button").offsetLeft + "px";
+    document.getElementById("converter-menu").style.bottom =
+        windowHeight -
+        document.getElementById("CONVERTER-creation-button").offsetTop +
         "px";
 }
 
