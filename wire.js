@@ -41,6 +41,41 @@ class Wire {
         }
     }
 
+    isPointOnWire(point) {
+        const threshold = (4.5 * this.currentStates.length) / 2;
+
+        let from = gates[this.from];
+        let to = gates[this.to];
+
+        let fromPos = from.outputPos(this.fromI);
+        let toPos = to.inputPos(this.toI);
+
+        let points = [fromPos, ...this.midPoints, toPos];
+
+        function distanceToSegment(p, v, w) {
+            // Return minimum distance between point p and line segment vw
+            const l2 = (w.x - v.x) ** 2 + (w.y - v.y) ** 2;
+            if (l2 === 0) return Math.hypot(p.x - v.x, p.y - v.y); // v == w
+            let t =
+                ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            t = Math.max(0, Math.min(1, t)); // clamp to segment
+            const projection = {
+                x: v.x + t * (w.x - v.x),
+                y: v.y + t * (w.y - v.y),
+            };
+            return Math.hypot(p.x - projection.x, p.y - projection.y);
+        }
+
+        for (let i = 0; i < points.length - 1; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const dist = distanceToSegment(point, p1, p2);
+            if (dist <= threshold) return true;
+        }
+
+        return false;
+    }
+
     show(gates) {
         for (let i = 0; i < this.currentStates.length; i++) {
             let from = gates[this.from];

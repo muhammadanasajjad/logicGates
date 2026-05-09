@@ -119,6 +119,31 @@ function loadSavedChip(name, x = 0, y = 0) {
         );
     }
 
+    for (let i = 0; i < subGates.length; i++) {
+        // console.log(
+        //     subWires[i].fromI >=
+        //         subGates[subWires[i].from].currentOutputs.length
+        // );
+    }
+
+    for (let i = 0; i < subWires.length; i++) {
+        let j = subWires[i].from;
+
+        console.log(
+            subWires[i].fromI,
+            "fromMax: ",
+            subGates[j].currentOutputs.length - 1
+        );
+
+        j = subWires[i].to;
+        console.log(
+            subWires[i].toI,
+            "toMax: ",
+            subGates[j].currentInputs.length - 1
+        );
+    }
+
+    console.log(subWires);
     chip = new Chip(x, y, subGates, subWires, name);
     chips[name] = chip;
     return chip;
@@ -214,9 +239,9 @@ function createButtons() {
     buttonInput4.onclick = () =>
         selectedGateType.push(new Gate(mouseX, mouseY, "INPUT4"));
 
-    let buttonInput6 = document.getElementById("INPUT6-creation-button");
-    buttonInput6.onclick = () =>
-        selectedGateType.push(new Gate(mouseX, mouseY, "INPUT6"));
+    // let buttonInput6 = document.getElementById("INPUT6-creation-button");
+    // buttonInput6.onclick = () =>
+    //     selectedGateType.push(new Gate(mouseX, mouseY, "INPUT6"));
 
     let buttonInput8 = document.getElementById("INPUT8-creation-button");
     buttonInput8.onclick = () =>
@@ -234,9 +259,9 @@ function createButtons() {
     buttonOutput4.onclick = () =>
         selectedGateType.push(new Gate(mouseX, mouseY, "OUTPUT4"));
 
-    let buttonOutput6 = document.getElementById("OUTPUT6-creation-button");
-    buttonOutput6.onclick = () =>
-        selectedGateType.push(new Gate(mouseX, mouseY, "OUTPUT6"));
+    // let buttonOutput6 = document.getElementById("OUTPUT6-creation-button");
+    // buttonOutput6.onclick = () =>
+    //     selectedGateType.push(new Gate(mouseX, mouseY, "OUTPUT6"));
 
     let buttonOutput8 = document.getElementById("OUTPUT8-creation-button");
     buttonOutput8.onclick = () =>
@@ -266,17 +291,17 @@ function createButtons() {
     CONVERTERCHIP81Button.onclick = () =>
         selectedGateType.push(new ConverterChip(mouseX, mouseY, 8, 1));
 
-    let CONVERTERCHIP62Button = document.getElementById(
-        "CONVERTER-6-2-creation-button"
-    );
-    CONVERTERCHIP62Button.onclick = () =>
-        selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 2));
+    // let CONVERTERCHIP62Button = document.getElementById(
+    //     "CONVERTER-6-2-creation-button"
+    // );
+    // CONVERTERCHIP62Button.onclick = () =>
+    //     selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 2));
 
-    let CONVERTERCHIP61Button = document.getElementById(
-        "CONVERTER-6-1-creation-button"
-    );
-    CONVERTERCHIP61Button.onclick = () =>
-        selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 1));
+    // let CONVERTERCHIP61Button = document.getElementById(
+    //     "CONVERTER-6-1-creation-button"
+    // );
+    // CONVERTERCHIP61Button.onclick = () =>
+    //     selectedGateType.push(new ConverterChip(mouseX, mouseY, 6, 1));
 
     let CONVERTERCHIP42Button = document.getElementById(
         "CONVERTER-4-2-creation-button"
@@ -314,17 +339,17 @@ function createButtons() {
     CONVERTERCHIP18Button.onclick = () =>
         selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 8));
 
-    let CONVERTERCHIP26Button = document.getElementById(
-        "CONVERTER-2-6-creation-button"
-    );
-    CONVERTERCHIP26Button.onclick = () =>
-        selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 6));
+    // let CONVERTERCHIP26Button = document.getElementById(
+    //     "CONVERTER-2-6-creation-button"
+    // );
+    // CONVERTERCHIP26Button.onclick = () =>
+    //     selectedGateType.push(new ConverterChip(mouseX, mouseY, 2, 6));
 
-    let CONVERTERCHIP16Button = document.getElementById(
-        "CONVERTER-1-6-creation-button"
-    );
-    CONVERTERCHIP16Button.onclick = () =>
-        selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 6));
+    // let CONVERTERCHIP16Button = document.getElementById(
+    //     "CONVERTER-1-6-creation-button"
+    // );
+    // CONVERTERCHIP16Button.onclick = () =>
+    //     selectedGateType.push(new ConverterChip(mouseX, mouseY, 1, 6));
 
     let CONVERTERCHIP24Button = document.getElementById(
         "CONVERTER-2-4-creation-button"
@@ -363,7 +388,7 @@ function createButtons() {
         button.textContent = nameInput.value;
 
         button.onclick = () =>
-            selectedGateType.push(getChipCopy(chip[nameInput.value]));
+            selectedGateType.push(getChipCopy(chips[nameInput.value]));
         button.addEventListener("contextmenu", function (event) {
             console.log(event);
             event.preventDefault(); // Prevent default menu

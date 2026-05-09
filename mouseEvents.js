@@ -2,6 +2,7 @@ const element = document.getElementById("p5-canvas");
 
 element.addEventListener("mousedown", (e) => {
     document.getElementById("inout-menu").style.display = "none";
+    document.getElementById("converter-menu").style.display = "none";
     if (mouseY > height - 60) return;
 
     if (e.button === 0) {
@@ -42,7 +43,7 @@ element.addEventListener("mousedown", (e) => {
                                 gate.inputPos(j).x,
                                 gate.inputPos(j).y
                             ) <
-                                gate.connectorDiameter / 2 &&
+                                gate.inputSize(j) / 2 &&
                             gate.currentInputs[j].length ===
                                 selectedWire.stateCount &&
                             !(gate.type && gate.type.startsWith("INPUT"))
@@ -121,7 +122,7 @@ element.addEventListener("mouseup", (e) => {
                             gate.outputPos(j).x,
                             gate.outputPos(j).y
                         ) <
-                            gate.connectorDiameter / 2 &&
+                            gate.outputSize(j) / 2 &&
                         !(gate.type && gate.type.startsWith("OUTPUT"))
                     ) {
                         selectedWire = {
@@ -144,7 +145,7 @@ element.addEventListener("mouseup", (e) => {
                                 gate.inputPos(j).x,
                                 gate.inputPos(j).y
                             ) <
-                            gate.connectorDiameter / 2
+                            gate.inputSize(j) / 2
                         ) {
                             gate.currentInputs[0][j] =
                                 !gate.currentInputs[0][j];
@@ -160,7 +161,7 @@ element.addEventListener("mouseup", (e) => {
                                 gate.inputPos(j).x,
                                 gate.inputPos(j).y
                             ) <
-                            gate.connectorDiameter / 2
+                            gate.inputSize(j) / 2
                         ) {
                             if (gate.currentInputs[j].length === 1)
                                 gate.currentInputs[j][0] =
@@ -246,6 +247,14 @@ function onRightClick() {
                     "none";
             };
             break;
+        }
+    }
+
+    for (let i = 0; i < wires.length; i++) {
+        if (wires[i].isPointOnWire(createVector(worldMouseX, worldMouseY))) {
+            console.log("Wire clicked");
+            console.log(i);
+            wires.splice(i, 1);
         }
     }
 }
